@@ -26,7 +26,7 @@ def calcular_distancia(lat1, lon1, lat2, lon2):
 
 
 
-def buscar_regs_proximo(envio, limite_distancia_km=1, limite_tempo_minutos=1):
+def buscar_regs_proximo(envio, limite_distancia_km=1, limite_tempo_minutos=5):
     """
     Verifica se existe um RegS próximo ao envio em tempo e localização.
     Retorna o RegS encontrado ou None.
