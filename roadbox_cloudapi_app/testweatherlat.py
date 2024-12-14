@@ -8,8 +8,8 @@ api_key = "c851a04b1a1055e2db0008f82d274a0b"
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
 
 # Enter latitude and longitude
-latitude = input("Enter latitude: ")
-longitude = input("Enter longitude: ")
+latitude = -16.6199877
+longitude = -49.2553911
 
 # complete_url variable to store the full URL
 complete_url = f"{base_url}appid={api_key}&lat={latitude}&lon={longitude}"
@@ -19,6 +19,7 @@ response = requests.get(complete_url)
 
 # convert response to JSON
 x = response.json()
+print(x)
 
 # Check if the request was successful
 if x["cod"] == 200:  # HTTP 200 means the request was successful

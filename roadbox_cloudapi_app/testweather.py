@@ -22,7 +22,7 @@ response = requests.get(complete_url)
 # convert json format data into
 # python format data
 x = response.json()
-#print(x)
+print(x)
 
 # Now x contains list of nested dictionaries
 # Check the value of "cod" key is equal to
