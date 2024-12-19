@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-*moj&upz0j7_ax7q6%9^rie3!ijyp$)i+)63_u=f1+dp3gd0y$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 LOGGING = {
     "version": 1,  # the dictConfig format version
