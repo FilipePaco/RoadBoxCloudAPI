@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import EnvioSinistro, RegS
 from .utils import *
+from django.shortcuts import get_object_or_404
 import uuid
 
 class ProcessarSinistroView(APIView):
@@ -64,6 +65,73 @@ class ProcessarSinistroView(APIView):
                 message = f"Novo RegS criado com UUID {novo_regs.id_sinistro}."
 
             return Response({"message": message}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        
+class ListarSinistrosView(APIView):
+    def get(self, request):
+        try:
+            # Consultar todos os registros de EnvioSinistro
+            sinistros = RegS.objects.all()
+            
+            # Serializar os dados manualmente (ou use um Serializer se preferir)
+            sinistros_serializados = [
+                {
+                    "id_sinistro": sinistro.id_sinistro,
+                    "latitude": sinistro.latitude,
+                    "longitude": sinistro.longitude,
+                    "data_hora": sinistro.data_hora,
+                    "clima": sinistro.clima,
+                    "temperatura": sinistro.temperatura,
+                    "luminosidade": sinistro.luminosidade,                    
+                }
+                for sinistro in sinistros
+            ]
+
+            return Response(sinistros_serializados, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+class DetalharRegSView(APIView):
+    def get(self, request, id_sinistro):
+        try:
+            # Buscar o RegS pelo ID
+            regs = get_object_or_404(RegS, id_sinistro=id_sinistro)
+            
+            # Serializar os dados do RegS
+            regs_serializado = {
+                "id_sinistro": regs.id_sinistro,
+                "clima": regs.clima,
+                "temperatura": regs.temperatura,
+                "luminosidade": regs.luminosidade,
+                "data_hora": regs.data_hora,
+                "latitude": regs.latitude,
+                "longitude": regs.longitude,
+            }
+
+            # Buscar os EnvioSinistro relacionados
+            envios = EnvioSinistro.objects.filter(id_sinistro=regs.id_sinistro)
+            envios_serializados = [
+                {
+                    "id_envio": envio.id_envio,
+                    "latitude": envio.latitude,
+                    "longitude": envio.longitude,
+                    "data_hora": envio.data_hora,
+                    "foto_sinistro": envio.foto_sinistro,
+                }
+                for envio in envios
+            ]
+
+            # Combinar os dados
+            resultado = {
+                "regs": regs_serializado,
+                "envios_relacionados": envios_serializados,
+            }
+
+            return Response(resultado, status=status.HTTP_200_OK)
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

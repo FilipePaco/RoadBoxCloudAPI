@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'roadbox_cloudapi_app'
+    'roadbox_cloudapi_app',
+    'django_seed',
 ]
 
 MIDDLEWARE = [
