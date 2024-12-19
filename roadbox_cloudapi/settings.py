@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +27,9 @@ SECRET_KEY = 'django-insecure-*moj&upz0j7_ax7q6%9^rie3!ijyp$)i+)63_u=f1+dp3gd0y$
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 
 LOGGING = {
     "version": 1,  # the dictConfig format version
